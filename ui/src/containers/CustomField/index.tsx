@@ -14,10 +14,10 @@ const SuccessSlider = styled(Slider)<SliderProps>(() => ({
   color: sliderColor,
   "& .MuiSlider-thumb": {
     "&:hover, &.Mui-focusVisible": {
-      boxShadow: `0 0 0 8 ${alpha(sliderColor, 0.16)}`,
+      boxShadow: `0 0 0 8px ${alpha(sliderColor, 0.16)}`,
     },
     "&.Mui-active": {
-      boxShadow: `0 0 0 14 ${alpha(sliderColor, 0.16)}`,
+      boxShadow: `0 0 0 14px ${alpha(sliderColor, 0.16)}`,
     },
   },
 }));
