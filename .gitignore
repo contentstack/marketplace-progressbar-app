@@ -25,3 +25,4 @@ ui/.DS_Store
 .vercel
 
 .eslintcache
+.dccache
