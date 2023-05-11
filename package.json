@@ -16,6 +16,8 @@
 	},
 	"homepage": "https://github.com/contentstack-expert-services/marketplace-app-template#readme",
 	"devDependencies": {
+		"@types/node": "^20.1.2",
+		"@types/react": "^18.2.6",
 		"husky": "^4.3.8",
 		"prettier": "^2.4.1",
 		"rimraf": "^3.0.2",
@@ -29,5 +31,11 @@
 	"validate-branch-name": {
 		"pattern": "^(feature|bugfix|hotfix)/ESI-[0-9]+-[a-z0-9-]{5,30}$",
 		"errorMsg": "Please add valid branch name!"
+	},
+	"dependencies": {
+		"@contentstack/app-sdk": "^1.4.1",
+		"@datadog/browser-rum": "^4.42.1",
+		"jotai": "^2.1.0",
+		"react": "^18.2.0"
 	}
 }
