@@ -1,10 +1,29 @@
 import React from "react";
+import { datadogRum } from "@datadog/browser-rum";
 
 interface MyProps {}
 
 interface MyState {
   hasError: boolean;
 }
+
+datadogRum.init({
+  applicationId: `${process.env.REACT_APP_DATADOG_RUM_APPLICATION_ID}`,
+  clientToken: `${process.env.REACT_APP_DATADOG_RUM_CLIENT_TOKEN}`,
+  site: `${process.env.REACT_APP_DATADOG_RUM_SITE}`,
+  service: `${process.env.REACT_APP_DATADOG_RUM_SERVICE}`,
+  sampleRate: 100,
+  sessionReplaySampleRate: 20,
+  trackInteractions: true,
+  trackResources: true,
+  trackLongTasks: true,
+  defaultPrivacyLevel: "mask-user-input",
+  useCrossSiteSessionCookie: true,
+});
+
+//sending MetaData to Datadog RUM
+datadogRum.setGlobalContextProperty("Application Type", "Marketplace");
+datadogRum.setGlobalContextProperty("Application Name", "Progress Bar App");
 
 class ErrorBoundary extends React.Component<MyProps, MyState> {
   constructor(props: any) {
@@ -21,7 +40,7 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
   componentDidCatch(error: any, errorInfo: any) {
     // You can also log the error to an error reporting service
     // logErrorToMyService(error, errorInfo);
-    console.error("errorInfo ", errorInfo);
+    datadogRum.addError(error);
     throw new Error(errorInfo);
   }
 
