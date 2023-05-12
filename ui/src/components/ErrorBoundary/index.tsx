@@ -32,7 +32,7 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
 
   static getDerivedStateFromError(error: any) {
     // Update state so the next render will show the fallback UI.
-    datadogRum.addError(error);
+    console.warn(error);
     return { hasError: true };
   }
 
