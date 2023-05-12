@@ -21,7 +21,6 @@ datadogRum.init({
   useCrossSiteSessionCookie: true,
 });
 
-//sending MetaData to Datadog RUM
 datadogRum.setGlobalContextProperty("Application Type", "Marketplace");
 datadogRum.setGlobalContextProperty("Application Name", "Progress Bar App");
 
@@ -33,7 +32,7 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
 
   static getDerivedStateFromError(error: any) {
     // Update state so the next render will show the fallback UI.
-    console.warn(error); // Remove this line if not required.
+    datadogRum.addError(error);
     return { hasError: true };
   }
 
