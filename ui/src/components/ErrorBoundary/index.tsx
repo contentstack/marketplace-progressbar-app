@@ -7,11 +7,18 @@ interface MyState {
   hasError: boolean;
 }
 
+const {
+  REACT_APP_DATADOG_RUM_APPLICATION_ID,
+  REACT_APP_DATADOG_RUM_CLIENT_TOKEN,
+  REACT_APP_DATADOG_RUM_SITE,
+  REACT_APP_DATADOG_RUM_SERVICE,
+}: any = process.env;
+
 datadogRum.init({
-  applicationId: `${process.env.REACT_APP_DATADOG_RUM_APPLICATION_ID}`,
-  clientToken: `${process.env.REACT_APP_DATADOG_RUM_CLIENT_TOKEN}`,
-  site: `${process.env.REACT_APP_DATADOG_RUM_SITE}`,
-  service: `${process.env.REACT_APP_DATADOG_RUM_SERVICE}`,
+  applicationId: REACT_APP_DATADOG_RUM_APPLICATION_ID,
+  clientToken: REACT_APP_DATADOG_RUM_CLIENT_TOKEN,
+  site: REACT_APP_DATADOG_RUM_SITE,
+  service: REACT_APP_DATADOG_RUM_SERVICE,
   sampleRate: 100,
   sessionReplaySampleRate: 20,
   trackInteractions: true,
@@ -31,14 +38,11 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
   }
 
   static getDerivedStateFromError(error: any) {
-    // Update state so the next render will show the fallback UI.
     console.warn(error);
     return { hasError: true };
   }
 
   componentDidCatch(error: any, errorInfo: any) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
     datadogRum.addError(error);
     throw new Error(errorInfo);
   }
@@ -47,7 +51,6 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
     const { hasError } = this.state;
     const { children } = this.props;
     if (hasError) {
-      // You can render any custom fallback UI
       return <h1>Something went wrong.</h1>;
     }
 
