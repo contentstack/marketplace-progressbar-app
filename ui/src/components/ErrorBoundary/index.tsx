@@ -1,10 +1,35 @@
 import React from "react";
+import { datadogRum } from "@datadog/browser-rum";
 
 interface MyProps {}
 
 interface MyState {
   hasError: boolean;
 }
+
+const {
+  REACT_APP_DATADOG_RUM_APPLICATION_ID,
+  REACT_APP_DATADOG_RUM_CLIENT_TOKEN,
+  REACT_APP_DATADOG_RUM_SITE,
+  REACT_APP_DATADOG_RUM_SERVICE,
+}: any = process.env;
+
+datadogRum.init({
+  applicationId: REACT_APP_DATADOG_RUM_APPLICATION_ID,
+  clientToken: REACT_APP_DATADOG_RUM_CLIENT_TOKEN,
+  site: REACT_APP_DATADOG_RUM_SITE,
+  service: REACT_APP_DATADOG_RUM_SERVICE,
+  sampleRate: 100,
+  sessionReplaySampleRate: 20,
+  trackInteractions: true,
+  trackResources: true,
+  trackLongTasks: true,
+  defaultPrivacyLevel: "mask-user-input",
+  useCrossSiteSessionCookie: true,
+});
+
+datadogRum.setGlobalContextProperty("Application Type", "Marketplace");
+datadogRum.setGlobalContextProperty("Application Name", "Progress Bar App");
 
 class ErrorBoundary extends React.Component<MyProps, MyState> {
   constructor(props: any) {
@@ -13,15 +38,12 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
   }
 
   static getDerivedStateFromError(error: any) {
-    // Update state so the next render will show the fallback UI.
-    console.warn(error); // Remove this line if not required.
+    console.warn(error);
     return { hasError: true };
   }
 
   componentDidCatch(error: any, errorInfo: any) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
-    console.error("errorInfo ", errorInfo);
+    datadogRum.addError(error);
     throw new Error(errorInfo);
   }
 
@@ -29,7 +51,6 @@ class ErrorBoundary extends React.Component<MyProps, MyState> {
     const { hasError } = this.state;
     const { children } = this.props;
     if (hasError) {
-      // You can render any custom fallback UI
       return <h1>Something went wrong.</h1>;
     }
 

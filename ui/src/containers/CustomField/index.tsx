@@ -7,6 +7,7 @@ import { isEmpty } from "lodash";
 
 import { TypeSDKData, TypeProgressBar } from "../../common/types";
 import "./styles.css";
+import { useAnalytics } from "../../hooks/useAnalytics";
 
 const sliderColor = "#5d50bf";
 
@@ -28,6 +29,7 @@ const CustomField: React.FC = function () {
     location: {},
     appSdkInitialized: false,
   });
+  const { trackEvent } = useAnalytics();
 
   const [slideValue, setSlideValue] = useState<[TypeProgressBar]>([
     {
@@ -56,6 +58,7 @@ const CustomField: React.FC = function () {
   const onChangeSave = (event: Event, slideVal: number | Array<number>) => {
     setSlideValue([{ value: slideVal }]);
     state.location?.CustomField?.field?.setData([{ value: slideVal }]);
+    trackEvent("Sliding", { property: `Value sets to ${slideVal}` });
   };
 
   return (
