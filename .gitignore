@@ -26,3 +26,5 @@ ui/.DS_Store
 
 .eslintcache
 .dccache
+playwright-report
+.env

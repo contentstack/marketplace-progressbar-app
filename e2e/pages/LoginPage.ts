@@ -1,13 +1,11 @@
 import { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
-  // Define selectors
   readonly page: Page;
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
 
-  // Initialize selectors using constructor
   constructor(page: Page) {
     this.page = page;
     this.emailInput = page.locator("#email");

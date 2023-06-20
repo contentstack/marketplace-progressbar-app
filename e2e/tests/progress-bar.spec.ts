@@ -55,7 +55,12 @@ test.describe.serial("Progress Bar App Flow", () => {
     });
 
     test("Create Content Entry", async ({ page }) => {
-      await dashboard.createEntry();
+      await dashboard.createEntry(true);
+    });
+
+    test("Get score by sliding the app", async ({ page }) => {
+      await dashboard.createEntry(false);
+      await dashboard.slideEntry();
     });
   });
 
@@ -78,6 +83,7 @@ test.describe.serial("Progress Bar App Flow", () => {
 
     test("Should delete the stack", async () => {
       await dashboard.navigateToDashboard(stackData.stack.api_key);
+      await dashboard.deleteStack();
     });
   });
 });

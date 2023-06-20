@@ -72,7 +72,7 @@ export class DashboardPage {
     await this.page.getByText("Content Type updated successfully.").waitFor();
   }
 
-  async createEntry() {
+  async createEntry(saveEntry: boolean) {
     await this.page
       .getByRole("link", { name: "Entries", exact: true })
       .waitFor();
@@ -81,15 +81,14 @@ export class DashboardPage {
       .locator('[data-test-id="cs-new-entry-all-entry"]')
       .waitFor();
     await this.page.locator('[data-test-id="cs-new-entry-all-entry"]').click();
-    await this.page.locator('#custom div').nth(1).waitFor({state: 'visible'});
-    // await this.page
-    //   .locator('[data-test-id="cs-new-entry-single-proceed"]')
-    //   .click();
+    await this.page.locator("#custom div").nth(1).waitFor({ state: "visible" });
     await this.page
       .locator('[data-test-id="cs-skeleton-tile"]')
+      .first()
       .waitFor({ state: "visible" });
     await this.page
       .locator('[data-test-id="cs-skeleton-tile"]')
+      .first()
       .waitFor({ state: "hidden" });
     await this.page.getByTestId("custom").getByText("Custom").waitFor();
     await this.page
@@ -98,12 +97,31 @@ export class DashboardPage {
       .filter({ hasText: "10" })
       .first()
       .isVisible();
+    if (saveEntry) {
+      await this.page
+        .locator('[data-test-id="cs-entry-not-locked-and-localized-save"]')
+        .waitFor();
+      await this.page
+        .locator('[data-test-id="cs-entry-not-locked-and-localized-save"]')
+        .click();
+      await this.page.getByText("Entry created successfully.").waitFor();
+    }
+  }
+
+  async slideEntry() {
     await this.page
-      .locator('[data-test-id="cs-entry-not-locked-and-localized-save"]')
-      .waitFor();
+      .frameLocator('[data-testid="app-extension-frame"]')
+      .locator(".MuiSlider-rail")
+      .hover();
     await this.page
-      .locator('[data-test-id="cs-entry-not-locked-and-localized-save"]')
+      .frameLocator('[data-testid="app-extension-frame"]')
+      .locator(".MuiSlider-rail")
       .click();
-    await this.page.getByText("Entry created successfully.").waitFor();
+    await this.page
+      .frameLocator('[data-testid="app-extension-frame"]')
+      .locator("span")
+      .filter({ hasText: "62" })
+      .first()
+      .isVisible();
   }
 }

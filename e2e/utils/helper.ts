@@ -36,7 +36,6 @@ export const getAuthToken = async () => {
     await writeFile(savedObj);
     return result.data.user.authtoken;
   } catch (error) {
-    console.log('error: ', error)
     console.error(error);
   }
 };
