@@ -1,5 +1,4 @@
 import { expect, Page } from "@playwright/test";
-import { elements } from "../elements/progress-bar.element";
 
 export class DashboardPage {
   readonly page: Page;
