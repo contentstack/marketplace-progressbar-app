@@ -41,15 +41,15 @@ export class DashboardPage {
     await this.page.locator('[data-test-id="cs-cb-edit-ct-details"]').click();
     await this.page.getByText("Content Type created successfully.").waitFor();
     await this.page
-      .locator("div")
-      .filter({ hasText: /^Custom$/ })
+      .locator('[data-test-id="cs-field-type-selector"] div')
       .first()
       .waitFor();
     await this.page
-      .locator("div")
-      .filter({ hasText: /^Custom$/ })
+      .locator('[data-test-id="cs-field-type-selector"] div')
       .first()
       .click();
+    await this.page.getByText("Custom").waitFor();
+    await this.page.getByText("Custom").click();
     await this.page
       .locator('[data-test-id="cs-tabs"]')
       .getByText("Please select an extension")
@@ -64,7 +64,10 @@ export class DashboardPage {
     await this.page
       .locator('[data-test-id="cs-new-entry-single-proceed"]')
       .click();
-    await this.page.getByText("Progress Bar").waitFor({ state: "visible" });
+    await this.page
+      .getByText("Progress Bar")
+      .first()
+      .waitFor({ state: "visible" });
     await this.page.locator('[data-test-id="cs-ct-save-close"]').click();
     await this.page.getByText("Content Type updated successfully.").waitFor();
   }
@@ -78,11 +81,10 @@ export class DashboardPage {
       .locator('[data-test-id="cs-new-entry-all-entry"]')
       .waitFor();
     await this.page.locator('[data-test-id="cs-new-entry-all-entry"]').click();
-    await this.page.getByRole("cell", { name: "Progress content" }).waitFor();
-    await this.page.getByRole("cell", { name: "Progress content" }).click();
-    await this.page
-      .locator('[data-test-id="cs-new-entry-single-proceed"]')
-      .click();
+    await this.page.locator('#custom div').nth(1).waitFor({state: 'visible'});
+    // await this.page
+    //   .locator('[data-test-id="cs-new-entry-single-proceed"]')
+    //   .click();
     await this.page
       .locator('[data-test-id="cs-skeleton-tile"]')
       .waitFor({ state: "visible" });
