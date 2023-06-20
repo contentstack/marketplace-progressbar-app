@@ -5,12 +5,14 @@
   "dependencies": {
     "@contentstack/app-sdk": "^1.4.1",
     "@datadog/browser-rum": "^4.42.1",
+    "@mui/material": "^5.13.5",
     "@playwright/test": "^1.35.1",
     "@testing-library/jest-dom": "^5.16.5",
     "axios": "^1.4.0",
     "dotenv": "^16.2.0",
     "jotai": "^2.1.0",
     "jsonfile": "^6.1.0",
+    "lodash": "^4.17.21",
     "react": "^18.2.0"
   },
   "scripts": {
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@types/jsonfile": "^6.1.1",
+    "@types/lodash": "^4.14.195",
     "@types/node": "^20.1.2",
     "@types/react": "^18.2.6",
     "eslint-config-prettier": "^8.3.0",

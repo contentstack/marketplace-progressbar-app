@@ -17,7 +17,7 @@ test.describe.serial("Progress Bar App Flow", () => {
     authToken = token.authToken;
     try {
       if (authToken) {
-        await createStack(authToken, stack.name);
+        stackData = await createStack(authToken, stack.name);
       }
     } catch (error: any) {
       return error?.data?.errors;
@@ -72,7 +72,7 @@ test.describe.serial("Progress Bar App Flow", () => {
     test("Should uninstall Progress Bar App", async () => {
       await marketplace.navigateToMarketplaceInstalledApps();
       await marketplace.searchProgressBarApp();
-      await marketplace.selectProgressBarApp();
+      await marketplace.selectProgressBaAtInstalledApps();
       await marketplace.unInstallApp(app.name);
     });
 

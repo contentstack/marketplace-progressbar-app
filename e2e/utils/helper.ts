@@ -25,8 +25,8 @@ export const getAuthToken = async () => {
     },
     data: {
       user: {
-        BASIC_AUTH_USERNAME: BASIC_AUTH_USERNAME,
-        BASIC_AUTH_PASSWORD: BASIC_AUTH_PASSWORD,
+        email: BASIC_AUTH_USERNAME,
+        password: BASIC_AUTH_PASSWORD,
       },
     },
   };
@@ -36,6 +36,7 @@ export const getAuthToken = async () => {
     await writeFile(savedObj);
     return result.data.user.authtoken;
   } catch (error) {
+    console.log('error: ', error)
     console.error(error);
   }
 };
