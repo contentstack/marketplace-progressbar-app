@@ -9,7 +9,6 @@ export class LoginPage {
   constructor(page: Page) {
     this.page = page;
     this.emailInput = page.locator("#email");
-    this.passwordInput = page.locator("#pw");
     this.passwordInput = page.locator("#password");
     this.loginButton = page.locator(
       'button:has-text("Log In"), button:has-text("LOGIN")'
