@@ -7,20 +7,21 @@ import {
   installApp,
 } from "./e2e/utils/helper";
 
-const { BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD }: any = process.env;
+const { BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD, EMAIL, PASSWORD }: any =
+  process.env;
 
 async function globalSetup() {
   let loginPage: LoginPage;
   const browser = await chromium.launch();
   const page = await browser.newPage({
     httpCredentials: {
-      username: process.env.BASIC_AUTH_USERNAME || "",
-      password: process.env.BASIC_AUTH_PASSWORD || "",
+      username: BASIC_AUTH_USERNAME || "",
+      password: BASIC_AUTH_PASSWORD || "",
     },
   });
   loginPage = new LoginPage(page);
   await loginPage.visitLoginPage();
-  await loginPage.performLogin(BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD);
+  await loginPage.performLogin(EMAIL, PASSWORD);
   await getAuthToken();
 }
 

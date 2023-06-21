@@ -65,8 +65,7 @@ export const installApp = async (authToken: string) => {
   try {
     let result = await axios(options);
     savedObj["installation_uid"] = result.data.data.installation_uid;
-    console.log("install app response******: ", result);
-    // return result.data.data.installation_uid;
+    return result.data.data.installation_uid;
   } catch (error) {
     return error;
   }
@@ -83,16 +82,14 @@ export const uninstallApp = async (authToken: string, installId: string) => {
     },
   };
   try {
-    let result = await axios(options);
-    console.log("uninstall app response******: ", result);
-    // return result.data;
+    await axios(options);
   } catch (error) {
     return error;
   }
 };
 
 export const createContentType = async (authToken: string) => {
-  const generateUid = 'Test Content Type';
+  const generateUid = "Test Content Type";
   const schemaData = [
     {
       display_name: "Title",
@@ -108,7 +105,7 @@ export const createContentType = async (authToken: string) => {
     {
       config: {},
       display_name: "Custom",
-      extension_uid: "blt9d86cf0ab4d85f60",
+      extension_uid: REACT_UID,
       field_metadata: { extension: true },
       mandatory: false,
       non_localizable: false,
@@ -134,7 +131,6 @@ export const createContentType = async (authToken: string) => {
   };
   try {
     let result = await axios(options);
-    console.log("content type response *******: ", result);
     return result.data.content_type.uid;
   } catch (error) {
     return error;
@@ -142,7 +138,7 @@ export const createContentType = async (authToken: string) => {
 };
 
 export const createEntry = async (authToken: string, contentTypeId: string) => {
-  let generateTitle = 'Test Entry';
+  let generateTitle = "Test Entry";
   let options = {
     url: `https://${BASE_API_URL}/v3/content_types/${contentTypeId}/entries`,
     params: { locale: "en-us" },
@@ -161,8 +157,48 @@ export const createEntry = async (authToken: string, contentTypeId: string) => {
   };
   try {
     let result = await axios(options);
-    console.log("entry response *******: ", result);
-    return result.data;
+    return result.data.entry.uid;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteEntry = async (
+  token: string,
+  contentTypeId: string,
+  entryId: string
+) => {
+  let options = {
+    url: `https://${BASE_API_URL}/v3/content_types/${contentTypeId}/entries/${entryId}`,
+    method: "DELETE",
+    headers: {
+      api_key: STACK_API_KEY,
+      authtoken: token,
+      "Content-type": "application/json",
+    },
+  };
+  try {
+    await axios(options);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteContentType = async (
+  token: string,
+  contentTypeId: string
+) => {
+  let options = {
+    url: `https://${BASE_API_URL}/v3/content_types/${contentTypeId}`,
+    method: "DELETE",
+    headers: {
+      api_key: STACK_API_KEY,
+      authtoken: token,
+      "Content-type": "application/json",
+    },
+  };
+  try {
+    await axios(options);
   } catch (error) {
     return error;
   }
