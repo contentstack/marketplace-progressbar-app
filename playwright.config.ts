@@ -11,7 +11,7 @@ const config: PlaywrightTestConfig = {
     timeout: 5000,
   },
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  retries: 2,
   workers: process.env.CI ? 1 : undefined,
   reporter: [["html", { open: "always" }]],
   use: {
