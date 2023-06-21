@@ -3,13 +3,21 @@ import { expect, test } from "@playwright/test";
 import app from "../fixtures/app.json";
 import stack from "../fixtures/stack.json";
 import { DashboardPage } from "../pages/DashboardPage";
-import { Marketplace } from "../pages/marketplace/marketplace.page";
-import { createStack } from "../utils/helper";
+import {
+  createContentType,
+  createEntry,
+  installApp,
+  uninstallApp,
+} from "../utils/helper";
 
-test.describe.serial("Progress Bar App Flow", () => {
+const { STACK_API_KEY }: any = process.env;
+
+test.describe("Progress Bar App e2e", () => {
   const jsonFile = require("jsonfile");
   let authToken: string;
-  let stackData: any;
+  let dashboard: DashboardPage;
+  const stackApikey = STACK_API_KEY;
+  let installId: string;
 
   test.beforeAll(async () => {
     const file = "data.json";
@@ -17,73 +25,36 @@ test.describe.serial("Progress Bar App Flow", () => {
     authToken = token.authToken;
     try {
       if (authToken) {
-        stackData = await createStack(authToken, stack.name);
+        const installResponse: any = await installApp(authToken);
+        installId = installResponse.data.data.installation_uid;
+        const uidContentType = await createContentType(authToken);
+        await createEntry(authToken, uidContentType);
       }
     } catch (error: any) {
       return error?.data?.errors;
     }
   });
-
-  test.describe.serial("Install Progress Bar App", () => {
-    let marketplace: Marketplace;
-
-    test.use({ storageState: "storageState.json" });
-    test.beforeEach(async ({ page }) => {
-      marketplace = new Marketplace(page);
-      await marketplace.navigateToMarketplace();
-    });
-
-    test("Installation", async ({ page }) => {
-      await marketplace.selectAppsTab();
-      await marketplace.searchProgressBarApp();
-      await marketplace.selectProgressBarApp();
-      await marketplace.installApp(stack.name);
-    });
+  test.use({ storageState: "storageState.json" });
+  test.beforeEach(async ({ page }) => {
+    dashboard = new DashboardPage(page);
+    await dashboard.navigateToDashboard(stackApikey);
+    await page.getByRole("link", { name: "Entries" }).waitFor();
+    await page.getByRole("link", { name: "Entries" }).click();
   });
 
-  test.describe.serial("Create Content Type & Entry", () => {
-    let dashboard: DashboardPage;
-
-    test.use({ storageState: "storageState.json" });
-    test.beforeEach(async ({ page }) => {
-      dashboard = new DashboardPage(page);
-      await dashboard.navigateToDashboard(stackData.stack.api_key);
-    });
-
-    test("Create Content Type", async ({ page }) => {
-      await dashboard.createContentType();
-    });
-
-    test("Create Content Entry", async ({ page }) => {
-      await dashboard.createEntry(true);
-    });
-
-    test("Get score by sliding the app", async ({ page }) => {
-      await dashboard.createEntry(false);
-      await dashboard.slideEntry();
-    });
+  test("Assert that App is displaying", async ({ page }) => {
+    await dashboard.checksApp();
   });
 
-  test.describe.serial("Remove installation & stack", () => {
-    let dashboard: DashboardPage;
-    let marketplace: Marketplace;
+  test("Get score by sliding the App", async ({ page }) => {
+    await dashboard.slideApp();
+  });
 
-    test.use({ storageState: "storageState.json" });
-    test.beforeEach(async ({ page }) => {
-      dashboard = new DashboardPage(page);
-      marketplace = new Marketplace(page);
-    });
-
-    test("Should uninstall Progress Bar App", async () => {
-      await marketplace.navigateToMarketplaceInstalledApps();
-      await marketplace.searchProgressBarApp();
-      await marketplace.selectProgressBaAtInstalledApps();
-      await marketplace.unInstallApp(app.name);
-    });
-
-    test("Should delete the stack", async () => {
-      await dashboard.navigateToDashboard(stackData.stack.api_key);
-      await dashboard.deleteStack();
-    });
+  test.afterAll(async () => {
+    try {
+      await uninstallApp(authToken, installId);
+    } catch (error: any) {
+      return error?.data?.errors;
+    }
   });
 });
