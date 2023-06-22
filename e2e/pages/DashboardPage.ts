@@ -1,4 +1,4 @@
-import { expect, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 export class DashboardPage {
   readonly page: Page;
@@ -12,17 +12,14 @@ export class DashboardPage {
     await this.page.waitForLoadState();
   }
 
-  async selectApp() {
+  async selectContentType() {
     await this.page
       .locator('[data-test-id="cs-new-entry-all-entry"]')
       .waitFor();
     await this.page.locator('[data-test-id="cs-new-entry-all-entry"]').click();
-    await this.page.getByRole("cell", { name: "Test Content Type" }).waitFor();
-    await this.page.getByRole("cell", { name: "Test Content Type" }).click();
   }
 
-  async checksApp() {
-    await this.selectApp();
+  async hoverSlydeApp() {
     await this.page
       .frameLocator('[data-testid="app-extension-frame"]')
       .locator(".MuiSlider-rail")
@@ -31,6 +28,11 @@ export class DashboardPage {
       .frameLocator('[data-testid="app-extension-frame"]')
       .locator(".MuiSlider-rail")
       .hover();
+  }
+
+  async checksApp() {
+    await this.selectContentType();
+    await this.hoverSlydeApp();
     await this.page
       .frameLocator('[data-testid="app-extension-frame"]')
       .locator("span")
@@ -40,15 +42,8 @@ export class DashboardPage {
   }
 
   async slideApp() {
-    await this.selectApp();
-    await this.page
-      .frameLocator('[data-testid="app-extension-frame"]')
-      .locator(".MuiSlider-rail")
-      .waitFor({ state: "visible" });
-    await this.page
-      .frameLocator('[data-testid="app-extension-frame"]')
-      .locator(".MuiSlider-rail")
-      .hover();
+    await this.selectContentType();
+    await this.hoverSlydeApp();
     await this.page
       .frameLocator('[data-testid="app-extension-frame"]')
       .locator(".MuiSlider-rail")

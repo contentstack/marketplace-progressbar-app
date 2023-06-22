@@ -1,36 +1,30 @@
 /* eslint-disable no-loop-func */
-import { expect, test } from "@playwright/test";
-import app from "../fixtures/app.json";
-import stack from "../fixtures/stack.json";
+import { test } from "@playwright/test";
 import { DashboardPage } from "../pages/DashboardPage";
 import {
-  createContentType,
-  createEntry,
   deleteContentType,
   deleteEntry,
+  createContentTypeAndEntry,
   installApp,
   uninstallApp,
 } from "../utils/helper";
 
+const jsonFile = require("jsonfile");
 const { STACK_API_KEY }: any = process.env;
 
-const jsonFile = require("jsonfile");
 let authToken: string;
 let dashboard: DashboardPage;
 const stackApikey = STACK_API_KEY;
 let installId: string;
-let uidContentType: any;
-let entryId: string;
+const file = "data.json";
 
 test.beforeAll(async () => {
-  const file = "data.json";
   const token = jsonFile.readFileSync(file);
   authToken = token.authToken;
   try {
     if (authToken) {
       installId = await installApp(authToken);
-      uidContentType = await createContentType(authToken);
-      entryId = await createEntry(authToken, uidContentType);
+      createContentTypeAndEntry(authToken);
     }
   } catch (error: any) {
     return error?.data?.errors;
@@ -54,6 +48,9 @@ test("Get score by sliding the App", async ({ page }) => {
 
 test.afterAll(async () => {
   try {
+    const data = jsonFile.readFileSync(file);
+    const uidContentType = data.contentTypeUid;
+    const entryId = data.entryId;
     await uninstallApp(authToken, installId);
     await deleteEntry(authToken, uidContentType, entryId);
     await deleteContentType(authToken, uidContentType);
