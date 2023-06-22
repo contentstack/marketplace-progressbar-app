@@ -8,8 +8,7 @@ const {
   BASE_API_URL,
   STACK_API_KEY,
   DEVELOPER_HUB_API,
-  REACT_APP_UID,
-  REACT_UID,
+  REACT_ID,
 }: any = process.env;
 
 const file = "data.json";
@@ -50,7 +49,7 @@ export const getAuthToken = async () => {
 
 export const installApp = async (authToken: string) => {
   let options = {
-    url: `https://${DEVELOPER_HUB_API}/apps/${REACT_APP_UID}/install`,
+    url: `https://${DEVELOPER_HUB_API}/apps/${REACT_ID}/install`,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -64,7 +63,6 @@ export const installApp = async (authToken: string) => {
   };
   try {
     let result = await axios(options);
-    savedObj["installation_uid"] = result.data.data.installation_uid;
     return result.data.data.installation_uid;
   } catch (error) {
     return error;
@@ -88,7 +86,7 @@ export const uninstallApp = async (authToken: string, installId: string) => {
   }
 };
 
-export const createContentType = async (authToken: string) => {
+const createContentType = async (authToken: string, extensionId: string) => {
   const generateUid = "Test Content Type";
   const schemaData = [
     {
@@ -105,7 +103,7 @@ export const createContentType = async (authToken: string) => {
     {
       config: {},
       display_name: "Custom",
-      extension_uid: REACT_UID,
+      extension_uid: extensionId,
       field_metadata: { extension: true },
       mandatory: false,
       non_localizable: false,
@@ -131,13 +129,16 @@ export const createContentType = async (authToken: string) => {
   };
   try {
     let result = await axios(options);
-    return result.data.content_type.uid;
+    const uid = result.data.content_type.uid;
+    savedObj["contentTypeUid"] = uid;
+    await writeFile(savedObj);
+    createEntry(authToken, uid);
   } catch (error) {
     return error;
   }
 };
 
-export const createEntry = async (authToken: string, contentTypeId: string) => {
+const createEntry = async (authToken: string, contentTypeId: string) => {
   let generateTitle = "Test Entry";
   let options = {
     url: `https://${BASE_API_URL}/v3/content_types/${contentTypeId}/entries`,
@@ -157,7 +158,8 @@ export const createEntry = async (authToken: string, contentTypeId: string) => {
   };
   try {
     let result = await axios(options);
-    return result.data.entry.uid;
+    savedObj["entryId"] = result.data.entry.uid;
+    await writeFile(savedObj);
   } catch (error) {
     return error;
   }
@@ -202,4 +204,27 @@ export const deleteContentType = async (
   } catch (error) {
     return error;
   }
+};
+
+const getExtensions = async (token: string) => {
+  let options = {
+    url: `https://${BASE_API_URL}/v3/extensions?include_marketplace_extensions=true`,
+    method: "GET",
+    headers: {
+      api_key: STACK_API_KEY,
+      authtoken: token,
+      "Content-type": "application/json",
+      organization_uid: ORG_ID,
+    },
+  };
+  try {
+    let result = await axios(options);
+    createContentType(token, result.data.extensions[0].uid);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createContentTypeAndEntry = async (token: string) => {
+  getExtensions(token);
 };

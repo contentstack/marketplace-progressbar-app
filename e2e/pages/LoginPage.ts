@@ -27,9 +27,9 @@ export class LoginPage {
       await this.passwordInput.type(password);
       const loginButton = await this.page.waitForSelector(
         'button:has-text("Log In")'
-      );
-      await loginButton.click();
-      await this.page.waitForTimeout(2000);
+      ); 
+      await loginButton.click(); 
+      await this.page.waitForTimeout(2000); 
       await this.page
         .context()
         .storageState({ path: "storageState.json" as string });
