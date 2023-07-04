@@ -1,59 +1,75 @@
 /* eslint-disable no-loop-func */
-import { test } from "@playwright/test";
+import { chromium,test } from "@playwright/test";
 import { DashboardPage } from "../pages/DashboardPage";
 import {
   deleteContentType,
-  deleteEntry,
-  createContentTypeAndEntry,
   installApp,
   uninstallApp,
+  createApp,
+  updateApp,
+  createContentType,
+  createEntry,
+  getExtensionFieldUid,
+  getInstalledApp,
+  deleteApp,
 } from "../utils/helper";
 
-const jsonFile = require("jsonfile");
+import jsonFile from "jsonfile";
 const { STACK_API_KEY }: any = process.env;
 
+let savedCredentials: any = {};
 let authToken: string;
 let dashboard: DashboardPage;
-const stackApikey = STACK_API_KEY;
-let installId: string;
 const file = "data.json";
 
 test.beforeAll(async () => {
   const token = jsonFile.readFileSync(file);
   authToken = token.authToken;
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  dashboard = new DashboardPage(page);
   try {
     if (authToken) {
-      installId = await installApp(authToken);
-      createContentTypeAndEntry(authToken);
+      const appId: string = await createApp(authToken);
+      const { name } = await updateApp(authToken, appId);
+      const installationId: string = await installApp(authToken, appId, STACK_API_KEY);
+      const extUID = await getExtensionFieldUid(authToken, STACK_API_KEY); // gets extension field uid
+      savedCredentials['appName'] = name;
+      const contentTypeResp = await createContentType(authToken, STACK_API_KEY,extUID);
+      savedCredentials['contentTypeUID'] = contentTypeResp.content_type.uid;
+      if (contentTypeResp.notice === 'Content Type created successfully.') {
+        const entryResp = await createEntry(authToken, contentTypeResp.content_type.uid,STACK_API_KEY);
+        savedCredentials['entryUid'] = entryResp;
+        savedCredentials['appUID'] = appId;
+        savedCredentials['installationId'] = installationId;
     }
+  }
   } catch (error: any) {
     return error?.data?.errors;
   }
 });
-test.use({ storageState: "storageState.json" });
-test.beforeEach(async ({ page }) => {
-  dashboard = new DashboardPage(page);
-  await dashboard.navigateToDashboard(stackApikey);
-  await page.getByRole("link", { name: "Entries" }).waitFor();
-  await page.getByRole("link", { name: "Entries" }).click();
-});
-
-test("Assert that App is displaying", async ({ page }) => {
-  await dashboard.checksApp();
-});
-
-test("Get score by sliding the App", async ({ page }) => {
-  await dashboard.slideApp();
+test.describe('Progress Bar App testing', () => {
+  test("create entry and content type", async () => {
+    await dashboard.navigateToDashboard(STACK_API_KEY);
+    await dashboard.reachEntrySection();
+    await dashboard.selectContentType();
+  });
+  test("validate app is loaded successfully", async () => {
+    await dashboard.validateAppLoadedState();
+  });
+  test("validate app progress bar is working", async () => {
+    await dashboard.slideApp();
+  });
 });
 
 test.afterAll(async () => {
   try {
-    const data = jsonFile.readFileSync(file);
-    const uidContentType = data.contentTypeUid;
-    const entryId = data.entryId;
-    await uninstallApp(authToken, installId);
-    await deleteEntry(authToken, uidContentType, entryId);
-    await deleteContentType(authToken, uidContentType);
+    const installations = await getInstalledApp(authToken, savedCredentials.appUID);
+    if (installations.data.length) {
+      installations.data[0].uid && (await uninstallApp(authToken, installations.data[0].uid));
+    }
+    await deleteApp(authToken, savedCredentials.appUID);
+    await deleteContentType(authToken, savedCredentials.contentTypeUID);
   } catch (error: any) {
     return error?.data?.errors;
   }
