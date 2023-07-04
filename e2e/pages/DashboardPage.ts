@@ -12,11 +12,16 @@ export class DashboardPage {
     await this.page.waitForLoadState();
   }
 
+async reachEntrySection() {
+  await this.page.getByRole("link", { name: "Entries" }).waitFor();
+  await this.page.getByRole("link", { name: "Entries" }).click();
+  await this.page.click("[name='AddPlus']");
+  await this.page.waitForTimeout(2000);// wait for modal to open and load
+}
+
   async selectContentType() {
-    await this.page
-      .locator('[data-test-id="cs-new-entry-all-entry"]')
-      .waitFor();
-    await this.page.locator('[data-test-id="cs-new-entry-all-entry"]').click();
+    await this.page.locator('[data-test-id="table-body-row_0"]').click();
+    await this.page.locator('[name="Proceed"]').click();
   }
 
   async hoverSlydeApp() {
@@ -30,9 +35,7 @@ export class DashboardPage {
       .hover();
   }
 
-  async checksApp() {
-    await this.selectContentType();
-    await this.hoverSlydeApp();
+  async validateAppLoadedState() {
     await this.page
       .frameLocator('[data-testid="app-extension-frame"]')
       .locator("span")
@@ -42,8 +45,6 @@ export class DashboardPage {
   }
 
   async slideApp() {
-    await this.selectContentType();
-    await this.hoverSlydeApp();
     await this.page
       .frameLocator('[data-testid="app-extension-frame"]')
       .locator(".MuiSlider-rail")
