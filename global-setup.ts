@@ -1,10 +1,7 @@
-import { chromium, FullConfig } from "@playwright/test";
+import { chromium } from "@playwright/test";
 import { LoginPage } from "./e2e/pages/LoginPage";
 import {
-  createContentType,
-  createEntry,
   getAuthToken,
-  installApp,
 } from "./e2e/utils/helper";
 
 const { BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD, EMAIL, PASSWORD }: any =

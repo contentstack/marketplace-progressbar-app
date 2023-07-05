@@ -1,7 +1,9 @@
 import React from "react";
 import { datadogRum } from "@datadog/browser-rum";
 
-interface MyProps {}
+interface MyProps {
+  children: any;
+}
 
 interface MyState {
   hasError: boolean;
