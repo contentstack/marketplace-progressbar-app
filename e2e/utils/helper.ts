@@ -81,7 +81,7 @@ export const createApp = async (authToken: string) => {
 
 // updating app in developer hub & set baseUrl
 export const updateApp = async (authToken: string, appId: string) => {
-  const appName = `Dev tools _${Math.floor(Math.random() * 1000)}`;
+  const appName = `Progress bar _${Math.floor(Math.random() * 1000)}`;
   let options = {
     url: `https://${DEVELOPER_HUB_API}/apps/${appId}`,
     method: 'PUT',
