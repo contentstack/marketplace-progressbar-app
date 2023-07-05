@@ -5,7 +5,6 @@
   "dependencies": {
     "@contentstack/app-sdk": "^1.4.1",
     "@datadog/browser-rum": "^4.42.1",
-    "@playwright/test": "^1.35.1",
     "@testing-library/jest-dom": "^5.16.5",
     "axios": "^1.4.0",
     "dotenv": "^16.2.0",
@@ -26,6 +25,7 @@
     "test:safari-headed": "npx playwright test --headed --config=playwright.config.ts --project=safari"
   },
   "devDependencies": {
+    "@playwright/test": "1.25.0",
     "@types/jsonfile": "^6.1.1",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.1.2",
