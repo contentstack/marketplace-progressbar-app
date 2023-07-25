@@ -13,14 +13,15 @@ export class DashboardPage {
   }
 
 async reachEntrySection() {
-  await this.page.getByRole("link", { name: "Entries" }).waitFor();
-  await this.page.getByRole("link", { name: "Entries" }).click();
+  await this.page.locator("a >> [name='Entries']").waitFor();
+  await this.page.locator("a >> [name='Entries']").click();
   await this.page.click("[name='AddPlus']");
   await this.page.waitForTimeout(2000);// wait for modal to open and load
 }
 
   async selectContentType() {
-    await this.page.locator('[data-test-id="table-body-row_0"]').click();
+   const locateContentType =  await this.page.locator('[data-test-id="table-body-row_0"]')
+   await locateContentType.click();
     await this.page.locator('[name="Proceed"]').click();
   }
 
