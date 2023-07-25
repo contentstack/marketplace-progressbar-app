@@ -52,12 +52,7 @@ test.describe('Progress Bar App testing', () => {
   test("create entry and content type", async () => {
     await dashboard.navigateToDashboard(STACK_API_KEY);
     await dashboard.reachEntrySection();
-    await dashboard.selectContentType();
-  });
-  test("validate app is loaded successfully", async () => {
     await dashboard.validateAppLoadedState();
-  });
-  test("validate app progress bar is working", async () => {
     await dashboard.slideApp();
   });
 });
