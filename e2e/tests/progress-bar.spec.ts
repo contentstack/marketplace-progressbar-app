@@ -52,6 +52,7 @@ test.describe('Progress Bar App testing', () => {
   test("create entry and content type", async () => {
     await dashboard.navigateToDashboard(STACK_API_KEY);
     await dashboard.reachEntrySection();
+    await dashboard.openCreatedEntry(STACK_API_KEY, savedCredentials.entryUid, savedCredentials.contentTypeUID);
     await dashboard.validateAppLoadedState();
     await dashboard.slideApp();
   });
