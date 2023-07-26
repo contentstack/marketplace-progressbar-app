@@ -9,8 +9,6 @@ import { TypeSDKData, TypeProgressBar } from "../../common/types";
 import "./styles.css";
 
 const sliderColor = "#5d50bf";
-const Env = process.env.NODE_ENV || "";
-
 const SuccessSlider = styled(Slider)<SliderProps>(() => ({
   color: sliderColor,
   "& .MuiSlider-thumb": {
@@ -29,6 +27,7 @@ const CustomField: React.FC = function () {
     location: {},
     appSdkInitialized: false,
   });
+  const Env = process.env.NODE_ENV || "";
   const [slideValue, setSlideValue] = useState<[TypeProgressBar]>([
     {
       value: 10,
