@@ -7,9 +7,9 @@ import { isEmpty } from "lodash";
 
 import { TypeSDKData, TypeProgressBar } from "../../common/types";
 import "./styles.css";
-import { useAnalytics } from "../../hooks/useAnalytics";
 
 const sliderColor = "#5d50bf";
+const Env = process.env.NODE_ENV || "";
 
 const SuccessSlider = styled(Slider)<SliderProps>(() => ({
   color: sliderColor,
@@ -29,8 +29,6 @@ const CustomField: React.FC = function () {
     location: {},
     appSdkInitialized: false,
   });
-  const { trackEvent } = useAnalytics();
-
   const [slideValue, setSlideValue] = useState<[TypeProgressBar]>([
     {
       value: 10,
@@ -40,7 +38,6 @@ const CustomField: React.FC = function () {
   useEffect(() => {
     ContentstackAppSdk.init().then(async (appSdk) => {
       const config = await appSdk?.getConfig();
-
       setState({
         config,
         location: appSdk.location,
@@ -48,7 +45,8 @@ const CustomField: React.FC = function () {
       });
 
       const initialData = appSdk.location.CustomField?.field.getData();
-
+      if (Env === "production")
+        appSdk.pulse("Viewed", { property: "App loaded Successfully",app_name:"Progress Bar" });
       if (initialData && !isEmpty(initialData)) {
         setSlideValue(initialData);
       }
@@ -58,7 +56,6 @@ const CustomField: React.FC = function () {
   const onChangeSave = (event: Event, slideVal: number | Array<number>) => {
     setSlideValue([{ value: slideVal }]);
     state.location?.CustomField?.field?.setData([{ value: slideVal }]);
-    trackEvent("Sliding", { property: `Value sets to ${slideVal}` });
   };
 
   return (

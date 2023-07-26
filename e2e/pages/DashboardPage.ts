@@ -53,10 +53,6 @@ export class DashboardPage {
   async slideApp() {
     await this.page
       .frameLocator('[data-testid="app-extension-frame"]')
-      .locator(".MuiSlider-rail")
-      .click();
-    await this.page
-      .frameLocator('[data-testid="app-extension-frame"]')
       .locator("span")
       .filter({ hasText: "62" })
       .first()
