@@ -28,9 +28,6 @@ const CustomField: React.FC = function () {
     appSdkInitialized: false,
   });
   const Env = process.env.NODE_ENV || "";
-// eslint-disable-next-line no-console
-console.log("Env", Env);
-
   const [slideValue, setSlideValue] = useState<[TypeProgressBar]>([
     {
       value: 10,
