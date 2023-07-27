@@ -37,5 +37,6 @@ module.exports = {
     "no-console": ["error", { allow: ["warn", "error", "info"] }],
     "@typescript-eslint/space-before-blocks":"off",
     "import/prefer-default-export":"off",
+    "no-underscore-dangle":"off",
   },
 };

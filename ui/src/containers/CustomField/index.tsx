@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import ContentstackAppSdk from "@contentstack/app-sdk";
 import Slider, { SliderProps } from "@mui/material/Slider";
 import { alpha, styled } from "@mui/material/styles";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 
 import { TypeSDKData, TypeProgressBar } from "../../common/types";
 import "./styles.css";
+import useJsErrorTracker from "../../hooks/useJsErrorTracker";
 
 const sliderColor = "#5d50bf";
 const SuccessSlider = styled(Slider)<SliderProps>(() => ({
@@ -27,7 +28,7 @@ const CustomField: React.FC = function () {
     location: {},
     appSdkInitialized: false,
   });
-  const Env = process.env.NODE_ENV || "";
+  const { setErrorsMetaData } = useJsErrorTracker();
   const [slideValue, setSlideValue] = useState<[TypeProgressBar]>([
     {
       value: 10,
@@ -44,8 +45,14 @@ const CustomField: React.FC = function () {
       });
 
       const initialData = appSdk.location.CustomField?.field.getData();
-      if (Env === "production")
-        appSdk.pulse("Viewed", { property: "App loaded Successfully",app_name:"Progress Bar" });
+      const properties = {
+        "Stack": appSdk.stack._data.api_key as string,
+        "Organization": appSdk?.currentUser.defaultOrganization as string,
+        "App Location": "CustomField",
+        "User Id": get(appSdk, "stack._data.collaborators.0.uid", "") as string,
+      };
+      setErrorsMetaData(properties)
+      appSdk.pulse("Viewed", { property: "App loaded Successfully",app_name:"Progress Bar", app_location:"CustomField" });
       if (initialData && !isEmpty(initialData)) {
         setSlideValue(initialData);
       }
