@@ -35,5 +35,8 @@ module.exports = {
     "react/destructuring-assignment": ["warn"],
     "func-names": [0],
     "no-console": ["error", { allow: ["warn", "error", "info"] }],
+    "@typescript-eslint/space-before-blocks":"off",
+    "import/prefer-default-export":"off",
+    "no-underscore-dangle":"off",
   },
 };

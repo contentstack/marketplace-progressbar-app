@@ -1,33 +1,59 @@
 {
-	"name": "marketplace-progress-bar-app",
-	"version": "1.0.0",
-	"description": "",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/contentstack-expert-services/marketplace-app-template.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/contentstack-expert-services/marketplace-app-template/issues"
-	},
-	"homepage": "https://github.com/contentstack-expert-services/marketplace-app-template#readme",
-	"devDependencies": {
-		"husky": "^4.3.8",
-		"prettier": "^2.4.1",
-		"rimraf": "^3.0.2",
-		"validate-branch-name": "^1.3.0"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npx validate-branch-name && cd ui && rimraf build && npm run precommit"
-		}
-	},
-	"validate-branch-name": {
-		"pattern": "^(feature|bugfix|hotfix)/ESI-[0-9]+-[a-z0-9-]{5,30}$",
-		"errorMsg": "Please add valid branch name!"
-	}
+  "name": "marketplace-progress-bar-app",
+  "version": "1.0.1",
+  "description": "",
+  "dependencies": {
+    "@contentstack/app-sdk": "^1.4.1",
+    "@datadog/browser-rum": "^4.42.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "axios": "^1.4.0",
+    "dotenv": "^16.2.0",
+    "jotai": "^2.1.0",
+    "jsonfile": "^6.1.0",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettify": "prettier --write .",
+    "show-report": "npx playwright show-report",
+    "test:chrome": "npx playwright test --config=playwright.config.ts --project=Chromium",
+    "test:firefox": "npx playwright test --config=playwright.config.ts --project=firefox",
+    "test:safari": "npx playwright test --config=playwright.config.ts --project=safari",
+    "test:chrome-headed": "npx playwright test --headed --config=playwright.config.ts --project=Chromium",
+    "test:firefox-headed": "npx playwright test --headed --config=playwright.config.ts --project=firefox",
+    "test:safari-headed": "npx playwright test --headed --config=playwright.config.ts --project=safari"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.23.1",
+    "@types/jsonfile": "^6.1.1",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^20.1.2",
+    "@types/react": "^18.2.6",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^4.3.8",
+    "playwright":"1.23.1",
+    "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
+    "validate-branch-name": "^1.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/contentstack-expert-services/marketplace-app-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/contentstack-expert-services/marketplace-app-template/issues"
+  },
+  "homepage": "https://github.com/contentstack-expert-services/marketplace-app-template#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx validate-branch-name && cd ui && rimraf build && npm run precommit"
+    }
+  },
+  "validate-branch-name": {
+    "pattern": "^(feature|bugfix|hotfix)/ESI-[0-9]+-[a-z0-9-]{5,30}$",
+    "errorMsg": "Please add valid branch name!"
+  }
 }
