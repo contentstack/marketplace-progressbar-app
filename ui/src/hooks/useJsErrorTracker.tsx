@@ -1,4 +1,5 @@
 import { datadogRum } from "@datadog/browser-rum";
+import { each } from "lodash";
 
 const ENV: string = process.env.NODE_ENV || "";
 
@@ -10,8 +11,10 @@ const useJsErrorTracker = () => {
     datadogRum.addError(error);
   };
 
-  const setErrorsMetaData = (key: string, value: any) => {
-    datadogRum.setGlobalContextProperty(key, value);
+  const setErrorsMetaData = (properties:{ [key: string]: string }) => {
+    each(properties, (key, value) => {
+      datadogRum.setGlobalContextProperty(value, key);
+    });
   };
   return { trackError, setErrorsMetaData };
 };

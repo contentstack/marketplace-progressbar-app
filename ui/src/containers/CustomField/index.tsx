@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import ContentstackAppSdk from "@contentstack/app-sdk";
 import Slider, { SliderProps } from "@mui/material/Slider";
 import { alpha, styled } from "@mui/material/styles";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 
 import { TypeSDKData, TypeProgressBar } from "../../common/types";
 import "./styles.css";
-import { useAnalytics } from "../../hooks/useAnalytics";
+import useJsErrorTracker from "../../hooks/useJsErrorTracker";
 
 const sliderColor = "#5d50bf";
-
 const SuccessSlider = styled(Slider)<SliderProps>(() => ({
   color: sliderColor,
   "& .MuiSlider-thumb": {
@@ -29,8 +28,7 @@ const CustomField: React.FC = function () {
     location: {},
     appSdkInitialized: false,
   });
-  const { trackEvent } = useAnalytics();
-
+  const { setErrorsMetaData } = useJsErrorTracker();
   const [slideValue, setSlideValue] = useState<[TypeProgressBar]>([
     {
       value: 10,
@@ -40,7 +38,6 @@ const CustomField: React.FC = function () {
   useEffect(() => {
     ContentstackAppSdk.init().then(async (appSdk) => {
       const config = await appSdk?.getConfig();
-
       setState({
         config,
         location: appSdk.location,
@@ -48,7 +45,14 @@ const CustomField: React.FC = function () {
       });
 
       const initialData = appSdk.location.CustomField?.field.getData();
-
+      const properties = {
+        "Stack": appSdk.stack._data.api_key as string,
+        "Organization": appSdk?.currentUser.defaultOrganization as string,
+        "App Location": "CustomField",
+        "User Id": get(appSdk, "stack._data.collaborators.0.uid", "") as string,
+      };
+      setErrorsMetaData(properties)
+      appSdk.pulse("Viewed", { property: "App loaded Successfully",app_name:"Progress Bar", app_location:"CustomField" });
       if (initialData && !isEmpty(initialData)) {
         setSlideValue(initialData);
       }
@@ -58,7 +62,6 @@ const CustomField: React.FC = function () {
   const onChangeSave = (event: Event, slideVal: number | Array<number>) => {
     setSlideValue([{ value: slideVal }]);
     state.location?.CustomField?.field?.setData([{ value: slideVal }]);
-    trackEvent("Sliding", { property: `Value sets to ${slideVal}` });
   };
 
   return (
