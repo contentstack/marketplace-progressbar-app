@@ -26,3 +26,7 @@ ui/.DS_Store
 
 .eslintcache
 .dccache
+.env
+storageState.json
+playwright-report
+ui/.env
