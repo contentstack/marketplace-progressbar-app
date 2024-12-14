@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "axios": "^1.4.0",
     "dotenv": "^16.2.0",
-    "jotai": "^2.1.0",
+    "jotai": "^2.10.3",
     "jsonfile": "^6.1.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0"
