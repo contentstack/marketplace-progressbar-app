@@ -6,7 +6,7 @@
     "@contentstack/app-sdk": "^1.4.1",
     "@datadog/browser-rum": "^4.42.1",
     "@testing-library/jest-dom": "^5.16.5",
-    "axios": "^1.4.0",
+    "axios": "^1.7.9",
     "dotenv": "^16.2.0",
     "jotai": "^2.1.0",
     "jsonfile": "^6.1.0",
