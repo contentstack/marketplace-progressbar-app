@@ -16,8 +16,8 @@ export class LoginPage {
   }
 
   async visitLoginPage() {
-    if (process.env.ENV_URL) {
-      await this.page.goto(process.env.ENV_URL);
+    if (import.meta.env.ENV_URL) {
+      await this.page.goto(import.meta.env.ENV_URL);
     }
   }
 

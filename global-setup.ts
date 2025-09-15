@@ -5,7 +5,7 @@ import {
 } from "./e2e/utils/helper";
 
 const { BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD, EMAIL, PASSWORD }: any =
-  process.env;
+  import.meta.env;
 
 async function globalSetup() {
   let loginPage: LoginPage;

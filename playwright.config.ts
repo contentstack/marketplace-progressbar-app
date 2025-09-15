@@ -10,9 +10,9 @@ const config: PlaywrightTestConfig = {
   expect: {
     timeout: 5000,
   },
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!import.meta.env.CI,
   retries: 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: import.meta.env.CI ? 1 : undefined,
   reporter: [['html', { open: 'never' }]],
   use: {
     storageState: "storageState.json",
@@ -21,7 +21,7 @@ const config: PlaywrightTestConfig = {
     video: "retain-on-failure",
     viewport: { width: 1300, height: 720 },
     trace: "retain-on-failure",
-    baseURL: process.env.ENV_URL,
+    baseURL: import.meta.env.ENV_URL,
     launchOptions: {
       logger: {
         isEnabled: () => {

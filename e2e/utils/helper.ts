@@ -12,12 +12,12 @@ const {
   ORG_ID,
   APP_HOST_URL,
   STACK_API_KEY,
-}=process.env;
+}=import.meta.env;
 
 // entry page access
 export const entryPageFlow = async (savedCredentials, entryPage) => {
   //navigate to stacks page
-  const { STACK_API_KEY } = process.env;
+  const { STACK_API_KEY } = import.meta.env;
   const { contentTypeId, entryUid } = savedCredentials;
   await entryPage.navigateToEntry(STACK_API_KEY, contentTypeId, entryUid);
 };

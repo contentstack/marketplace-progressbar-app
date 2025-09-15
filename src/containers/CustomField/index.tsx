@@ -59,7 +59,7 @@ const CustomField: React.FC = function () {
     });
   }, []);
 
-  const onChangeSave = (event: Event, slideVal: number | Array<number>) => {
+  const onChangeSave = (_event: Event, slideVal: number | Array<number>) => {
     setSlideValue([{ value: slideVal }]);
     state.location?.CustomField?.field?.setData([{ value: slideVal }]);
   };

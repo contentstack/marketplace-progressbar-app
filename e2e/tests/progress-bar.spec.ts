@@ -15,7 +15,7 @@ import {
 } from "../utils/helper";
 
 import jsonFile from "jsonfile";
-const { STACK_API_KEY }: any = process.env;
+const { STACK_API_KEY }: any = import.meta.env;
 
 let savedCredentials: any = {};
 let authToken: string;
