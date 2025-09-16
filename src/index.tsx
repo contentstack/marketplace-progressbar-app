@@ -1,6 +1,6 @@
 /* Import React modules */
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 /* Import other node modules */
 import reportWebVitals from "./reportWebVitals";
 /* Import our modules */
@@ -9,11 +9,16 @@ import App from "./containers/App";
 /* Import our CSS */
 import "./index.css";
 
-ReactDOM.render(
+const container = document.getElementById("root");
+if (!container) {
+  throw new Error("Failed to find the root element");
+}
+
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

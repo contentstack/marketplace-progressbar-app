@@ -15,7 +15,7 @@ export class DashboardPage {
   async reachEntrySection() {
     await this.page.locator("a >> [name='Entries']").waitFor();
     await this.page.locator("a >> [name='Entries']").click();
-    await this.page.click("[name='AddPlus']");
+    await this.page.click("[data-test-id='cs-locale-list-dropdown']");
     await this.page.waitForTimeout(2000); // wait for modal to open and load
   }
 
