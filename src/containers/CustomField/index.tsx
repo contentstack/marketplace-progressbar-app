@@ -46,20 +46,24 @@ const CustomField: React.FC = function () {
 
       const initialData = appSdk.location.CustomField?.field.getData();
       const properties = {
-        "Stack": appSdk.stack._data.api_key as string,
-        "Organization": appSdk?.currentUser.defaultOrganization as string,
+        Stack: appSdk.stack._data.api_key as string,
+        Organization: appSdk?.currentUser.defaultOrganization as string,
         "App Location": "CustomField",
         "User Id": get(appSdk, "stack._data.collaborators.0.uid", "") as string,
       };
-      setErrorsMetaData(properties)
-      appSdk.pulse("Viewed", { property: "App loaded Successfully",app_name:"Progress Bar", app_location:"CustomField" });
+      setErrorsMetaData(properties);
+      appSdk.pulse("Viewed", {
+        property: "App loaded Successfully",
+        app_name: "Progress Bar",
+        app_location: "CustomField",
+      });
       if (initialData && !isEmpty(initialData)) {
         setSlideValue(initialData);
       }
     });
   }, []);
 
-  const onChangeSave = (event: Event, slideVal: number | Array<number>) => {
+  const onChangeSave = (_event: Event, slideVal: number | Array<number>) => {
     setSlideValue([{ value: slideVal }]);
     state.location?.CustomField?.field?.setData([{ value: slideVal }]);
   };
