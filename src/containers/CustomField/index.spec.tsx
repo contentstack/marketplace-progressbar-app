@@ -6,6 +6,7 @@ let customFieldDom: any;
 const elementsToTest = [".customField", ".customField__slide_bar"];
 
 beforeAll(async () => {
+  // eslint-disable-next-line react/react-in-jsx-scope
   customFieldDom = render(<CustomField />);
 });
 

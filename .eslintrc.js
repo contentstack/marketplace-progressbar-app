@@ -38,5 +38,7 @@ module.exports = {
     "@typescript-eslint/space-before-blocks": "off",
     "import/prefer-default-export": "off",
     "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
+    "consistent-return": "off",
   },
 };

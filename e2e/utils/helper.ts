@@ -17,7 +17,6 @@ const {
 // entry page access
 export const entryPageFlow = async (savedCredentials, entryPage) => {
   // navigate to stacks page
-  const { STACK_API_KEY } = process.env;
   const { contentTypeId, entryUid } = savedCredentials;
   await entryPage.navigateToEntry(STACK_API_KEY, contentTypeId, entryUid);
 };

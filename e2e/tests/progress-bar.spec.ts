@@ -80,9 +80,8 @@ test.afterAll(async () => {
       authToken,
       savedCredentials.appUID
     );
-    if (installations.data.length) {
-      installations.data[0].uid &&
-        (await uninstallApp(authToken, installations.data[0].uid));
+    if (installations.data.length && installations.data[0].uid) {
+      await uninstallApp(authToken, installations.data[0].uid);
     }
     await deleteApp(authToken, savedCredentials.appUID);
     await deleteContentType(authToken, savedCredentials.contentTypeUID);

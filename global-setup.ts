@@ -6,7 +6,6 @@ const { BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD, EMAIL, PASSWORD }: any =
   process.env;
 
 async function globalSetup() {
-  let loginPage: LoginPage;
   const browser = await chromium.launch();
   const page = await browser.newPage({
     httpCredentials: {
@@ -14,7 +13,7 @@ async function globalSetup() {
       password: BASIC_AUTH_PASSWORD || "",
     },
   });
-  loginPage = new LoginPage(page);
+  const loginPage: LoginPage = new LoginPage(page);
   await loginPage.visitLoginPage();
   await loginPage.performLogin(EMAIL, PASSWORD);
   await getAuthToken();

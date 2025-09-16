@@ -27,7 +27,8 @@ const config: PlaywrightTestConfig = {
     launchOptions: {
       logger: {
         isEnabled: () => false,
-        log: (name, severity, message, args) =>
+        log: (name, severity, message) =>
+          // eslint-disable-next-line no-console
           console.log(`${name}: ${message}`),
       },
     },
