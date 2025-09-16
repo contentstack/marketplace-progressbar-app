@@ -1,5 +1,5 @@
-const axios = require('axios');
-const jsonfile = require('jsonfile');
+import axios from 'axios';
+import jsonfile from 'jsonfile';
 
 const file = 'data.json';
 
@@ -12,12 +12,12 @@ const {
   ORG_ID,
   APP_HOST_URL,
   STACK_API_KEY,
-}=import.meta.env;
+} = process.env;
 
 // entry page access
 export const entryPageFlow = async (savedCredentials, entryPage) => {
   //navigate to stacks page
-  const { STACK_API_KEY } = import.meta.env;
+  const { STACK_API_KEY } = process.env;
   const { contentTypeId, entryUid } = savedCredentials;
   await entryPage.navigateToEntry(STACK_API_KEY, contentTypeId, entryUid);
 };

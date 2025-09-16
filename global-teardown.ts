@@ -1,5 +1,5 @@
 import { chromium, FullConfig } from '@playwright/test';
-const fs = require('fs');
+import fs from 'fs';
 
 async function globalTeardown(config: FullConfig) {
   await fs.unlink('data.json', (err) => {
