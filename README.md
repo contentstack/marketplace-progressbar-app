@@ -17,12 +17,14 @@ This app is designed to be installed and used within your Contentstack stack as 
 #### Installation in Contentstack
 
 1. **Install from Marketplace**
+
    - Navigate to your Contentstack stack
    - Go to the Marketplace section
    - Search for "Progress Bar App" or install directly from the marketplace
    - Follow the installation prompts
 
 2. **Add to Content Type**
+
    - Go to your Content Types
    - Edit the content type where you want to add progress tracking
    - Add a new custom field
@@ -47,17 +49,20 @@ If you're a developer looking to contribute or customize this app:
 #### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/contentstack-expert-services/marketplace-progressbar-app.git
    cd marketplace-progressbar-app
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -77,17 +82,20 @@ This project has been migrated from Create React App to Vite for faster developm
 ### Available Scripts
 
 #### Development
+
 - `npm run dev` or `npm start` - Start the development server with HMR
 - `npm run build` - Build the app for production
 - `npm run preview` - Preview the production build locally
 
 #### Testing
+
 - `npm test` - Run tests in watch mode with Vitest
 - `npm run test:ui` - Run tests with Vitest UI interface
 - `npm run test:run` - Run tests once (CI mode)
 - `npm run test:coverage` - Run tests with coverage report
 
 #### E2E Testing
+
 - `npm run test:chrome` - Run Playwright tests in Chrome
 - `npm run test:firefox` - Run Playwright tests in Firefox
 - `npm run test:safari` - Run Playwright tests in Safari
@@ -95,6 +103,7 @@ This project has been migrated from Create React App to Vite for faster developm
 - `npm run show-report` - Show Playwright test report
 
 #### Code Quality
+
 - `npm run prettify` - Format code with Prettier
 - `npm run lint:fix` - Fix ESLint issues automatically
 - `npm run precommit` - Run prettify and lint:fix (used in git hooks)
@@ -129,6 +138,7 @@ VITE_APP_TITLE=Marketplace Progress Bar App
 ### Vite Configuration
 
 The project uses Vite with the following key configurations:
+
 - **Port**: 3000 (configurable in `vite.config.ts`)
 - **Source Maps**: Enabled for better debugging
 - **React Plugin**: Configured for JSX support
@@ -136,11 +146,13 @@ The project uses Vite with the following key configurations:
 ## 🧪 Testing
 
 ### Unit Testing
+
 - **Framework**: Vitest
 - **Testing Library**: React Testing Library
 - **Coverage**: Istanbul for coverage reports
 
 ### E2E Testing
+
 - **Framework**: Playwright
 - **Browsers**: Chrome, Firefox, Safari
 - **Configuration**: `playwright.config.ts`
@@ -177,6 +189,7 @@ The build output will be in the `dist/` directory, ready for deployment.
 Once the Progress Bar App is installed in your Contentstack stack:
 
 1. **Creating Content with Progress Tracking**
+
    - Navigate to your content entries
    - Create a new entry or edit an existing one
    - Find the Progress Bar field in your content form
@@ -184,6 +197,7 @@ Once the Progress Bar App is installed in your Contentstack stack:
    - The value is automatically saved when you save the content
 
 2. **Understanding the Progress Bar**
+
    - The slider shows a visual representation of completion
    - Values range from 0% (not started) to 100% (completed)
    - The current value is displayed above the slider
@@ -199,6 +213,7 @@ Once the Progress Bar App is installed in your Contentstack stack:
 #### Deployment to Contentstack Marketplace
 
 1. Build the application:
+
    ```bash
    npm run build
    ```
@@ -230,6 +245,7 @@ We welcome contributions! Please follow these guidelines:
 
 1. **Fork the repository**
 2. **Create a feature branch** following the naming convention:
+
    ```
    feature/ESI-XXXX-descriptive-name
    bugfix/ESI-XXXX-descriptive-name
@@ -238,6 +254,7 @@ We welcome contributions! Please follow these guidelines:
 
 3. **Make your changes**
 4. **Run tests and linting**:
+
    ```bash
    npm run precommit
    ```
@@ -255,21 +272,23 @@ We welcome contributions! Please follow these guidelines:
 ### Branch Naming Convention
 
 Branches must follow this pattern:
+
 ```
 ^(feature|bugfix|hotfix)/ESI-[0-9]+-[a-z0-9-]{5,30}$
 ```
 
 Examples:
+
 - `feature/ESI-1234-add-new-progress-theme`
 - `bugfix/ESI-5678-fix-slider-value-persistence`
 - `hotfix/ESI-9999-critical-security-fix`
 
 ## 🐛 Troubleshooting
 
-
 ### For Developers
 
 **Issue**: Development server won't start
+
 ```bash
 # Clear node_modules and reinstall
 rm -rf node_modules package-lock.json
@@ -277,12 +296,14 @@ npm install
 ```
 
 **Issue**: Tests failing
+
 ```bash
 # Clear test cache
 npm run test:run -- --reporter=verbose
 ```
 
 **Issue**: Build errors
+
 ```bash
 # Check TypeScript errors
 npx tsc --noEmit
@@ -291,10 +312,10 @@ npx tsc --noEmit
 ## 📞 Support
 
 For support and questions:
+
 - Create an [issue](https://github.com/contentstack/marketplace-progressbar-app/issues)
 - Check the [documentation](https://www.contentstack.com/docs/developers/marketplace-apps/progress-bar)
 
 ---
 
 **Made with ❤️ by the Contentstack team**
-

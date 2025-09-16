@@ -11,7 +11,7 @@ const useJsErrorTracker = () => {
     datadogRum.addError(error);
   };
 
-  const setErrorsMetaData = (properties:{ [key: string]: string }) => {
+  const setErrorsMetaData = (properties: { [key: string]: string }) => {
     each(properties, (key, value) => {
       datadogRum.setGlobalContextProperty(value, key);
     });

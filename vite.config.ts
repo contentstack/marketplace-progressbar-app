@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,11 +10,11 @@ export default defineConfig({
     host: true,
   },
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     sourcemap: true,
   },
   define: {
-    'import.meta.env': 'import.meta.env',
+    "import.meta.env": "import.meta.env",
   },
-  publicDir: 'public',
-})
+  publicDir: "public",
+});

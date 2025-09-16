@@ -15,7 +15,7 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   retries: 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [['html', { open: 'never' }]],
+  reporter: [["html", { open: "never" }]],
   use: {
     storageState: "storageState.json",
     actionTimeout: 0,
@@ -26,9 +26,7 @@ const config: PlaywrightTestConfig = {
     baseURL: process.env.ENV_URL,
     launchOptions: {
       logger: {
-        isEnabled: () => {
-          return false;
-        },
+        isEnabled: () => false,
         log: (name, severity, message, args) =>
           console.log(`${name}: ${message}`),
       },
