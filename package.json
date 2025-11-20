@@ -35,7 +35,7 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx . --ignore-pattern 'node_modules/**' --ignore-pattern 'dist/**'",
     "precommit": "npm run prettify && npm run lint:fix",
     "show-report": "npx playwright show-report",
-    "test:chrome": "npx playwright test --config=playwright.config.ts --project=Chromium --headed",
+    "test:chrome": "npx playwright test --config=playwright.config.ts --project=Chromium",
     "test:firefox": "npx playwright test --config=playwright.config.ts --project=firefox",
     "test:safari": "npx playwright test --config=playwright.config.ts --project=safari",
     "test:chrome-headed": "npx playwright test --headed --config=playwright.config.ts --project=Chromium",
