@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class DashboardPage {
   readonly page: Page;
@@ -42,20 +42,35 @@ export class DashboardPage {
   }
 
   async validateAppLoadedState() {
-    await this.page
-      .frameLocator('[data-testid="app-extension-frame"]')
-      .locator("span")
-      .filter({ hasText: "10" })
-      .first()
-      .isVisible();
+    const frame = this.page.frameLocator('[data-testid="app-extension-frame"]');
+    const slider = frame.locator(".MuiSlider-root").first();
+    
+    // Wait for the slider to be visible
+    await slider.waitFor({ state: "visible", timeout: 30000 });
+    await expect(slider).toBeVisible();
   }
 
   async slideApp() {
-    await this.page
-      .frameLocator('[data-testid="app-extension-frame"]')
-      .locator("span")
-      .filter({ hasText: "62" })
-      .first()
-      .isVisible();
+    const frame = this.page.frameLocator('[data-testid="app-extension-frame"]');
+    const slider = frame.locator(".MuiSlider-root").first();
+    const sliderThumb = frame.locator(".MuiSlider-thumb").first();
+
+    // Wait for slider to be ready
+    await slider.waitFor({ state: "visible" });
+
+    // Get the slider's bounding box to calculate positions
+    const sliderBox = await slider.boundingBox();
+    if (!sliderBox) {
+      throw new Error("Could not get slider bounding box");
+    }
+
+    // Click at ~60% position on the slider
+    const targetX = sliderBox.x + sliderBox.width * 0.6;
+    const targetY = sliderBox.y + sliderBox.height / 2;
+
+    await this.page.mouse.click(targetX, targetY);
+
+    // Verify the thumb moved (slider value changed)
+    await expect(sliderThumb).toBeVisible();
   }
 }

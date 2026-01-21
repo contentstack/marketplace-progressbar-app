@@ -21,3 +21,4 @@ node_modules/
 storageState.json
 playwright-report
 dist
+test-results/
