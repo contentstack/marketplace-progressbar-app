@@ -1,5 +1,5 @@
 /* eslint-disable no-loop-func */
-import { chromium, test } from "@playwright/test";
+import { test } from "@playwright/test";
 import jsonFile from "jsonfile";
 import { DashboardPage } from "../pages/DashboardPage";
 import {
@@ -19,15 +19,11 @@ const { STACK_API_KEY }: any = process.env;
 
 const savedCredentials: any = {};
 let authToken: string;
-let dashboard: DashboardPage;
 const file = "data.json";
 
 test.beforeAll(async () => {
   const token = jsonFile.readFileSync(file);
   authToken = token.authToken;
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-  dashboard = new DashboardPage(page);
   try {
     if (authToken) {
       const appId: string = await createApp(authToken);
@@ -37,7 +33,7 @@ test.beforeAll(async () => {
         appId,
         STACK_API_KEY
       );
-      const extUID = await getExtensionFieldUid(authToken, STACK_API_KEY); // gets extension field uid
+      const extUID = await getExtensionFieldUid(authToken, STACK_API_KEY);
       savedCredentials.appName = name;
       const contentTypeResp = await createContentType(
         authToken,
@@ -60,10 +56,11 @@ test.beforeAll(async () => {
     return error?.data?.errors;
   }
 });
+
 test.describe("Progress Bar App testing", () => {
-  test("create entry and content type", async () => {
-    await dashboard.navigateToDashboard(STACK_API_KEY);
-    await dashboard.reachEntrySection();
+  test("Validate Progress Bar Field", async ({ page }) => {
+    const dashboard = new DashboardPage(page);
+    // Navigate directly to the entry page
     await dashboard.openCreatedEntry(
       STACK_API_KEY,
       savedCredentials.entryUid,
