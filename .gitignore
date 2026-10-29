@@ -22,3 +22,6 @@ storageState.json
 playwright-report
 dist
 test-results/
+# build output
+coverage/
+*.tsbuildinfo
