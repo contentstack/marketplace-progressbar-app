@@ -1,38 +1,13 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
-// Mock Contentstack App SDK
-vi.mock("@contentstack/app-sdk", () => ({
-  default: {
-    init: vi.fn().mockResolvedValue({
-      getConfig: vi.fn().mockResolvedValue({}),
-      location: {
-        CustomField: {
-          field: {
-            getData: vi.fn().mockReturnValue(null),
-            setData: vi.fn(),
-          },
-        },
-      },
-      stack: {
-        _data: {
-          api_key: "test-api-key",
-          collaborators: [{ uid: "test-user-id" }],
-        },
-      },
-      currentUser: {
-        defaultOrganization: "test-org",
-      },
-      pulse: vi.fn(),
-    }),
+// Datadog RUM must never initialise or send during tests.
+vi.mock("@datadog/browser-rum", () => ({
+  datadogRum: {
+    init: vi.fn(),
+    addError: vi.fn(),
+    setGlobalContextProperty: vi.fn(),
   },
-}));
-
-// Mock useJsErrorTracker hook
-vi.mock("../hooks/useJsErrorTracker", () => ({
-  default: () => ({
-    setErrorsMetaData: vi.fn(),
-  }),
 }));
 
 // Mock any global objects or functions that might be needed
