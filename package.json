@@ -88,7 +88,7 @@
     }
   },
   "validate-branch-name": {
-    "pattern": "^(feature|bugfix|hotfix)/ESI-[0-9]+-[a-z0-9-]{5,30}$",
+    "pattern": "^((feature|bugfix|hotfix)/(ESI|MKT)-[0-9]+-[a-z0-9-]{5,30}|claude/(feat|fix|chore|test|docs|refactor|ci)/[A-Z]+-[0-9]+-[a-z0-9-]{3,40})$",
     "errorMsg": "Please add valid branch name!"
   }
 }
