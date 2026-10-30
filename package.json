@@ -73,14 +73,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/contentstack-expert-services/marketplace-app-template.git"
+    "url": "git+https://github.com/contentstack/marketplace-progressbar-app.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/contentstack-expert-services/marketplace-app-template/issues"
+    "url": "https://github.com/contentstack/marketplace-progressbar-app/issues"
   },
-  "homepage": "https://github.com/contentstack-expert-services/marketplace-app-template#readme",
+  "homepage": "https://github.com/contentstack/marketplace-progressbar-app#readme",
   "husky": {
     "hooks": {
       "pre-commit": "npx validate-branch-name && rimraf build && rimraf dist && npm run precommit"

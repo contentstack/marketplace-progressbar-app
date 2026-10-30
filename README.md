@@ -1,9 +1,9 @@
 # Marketplace Progress Bar App
 
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.5.2-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-4.4.5-646CFF.svg)](https://vitejs.dev/)
+[![Vite](https://img.shields.io/badge/Vite-7-646CFF.svg)](https://vitejs.dev/)
 [![Material-UI](https://img.shields.io/badge/Material--UI-5.14.2-0081CB.svg)](https://mui.com/)
 
 A modern, customizable progress bar component designed for Contentstack marketplace applications. This app provides an intuitive slider interface that allows Contentstack users (developers, content managers, and content creators) to set and track progress values within their content entries using a custom field.
@@ -29,7 +29,6 @@ This app is designed to be installed and used within your Contentstack stack as 
    - Edit the content type where you want to add progress tracking
    - Add a new custom field
    - Select "Progress Bar App" as the field type
-   - Configure the field settings as needed
 
 3. **Start Using**
    - Create or edit content entries
@@ -51,7 +50,7 @@ If you're a developer looking to contribute or customize this app:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/contentstack-expert-services/marketplace-progressbar-app.git
+   git clone https://github.com/contentstack/marketplace-progressbar-app.git
    cd marketplace-progressbar-app
    ```
 
@@ -89,9 +88,9 @@ This project has been migrated from Create React App to Vite for faster developm
 
 #### Testing
 
-- `npm test` - Run tests in watch mode with Vitest
+- `npm test` - Run tests once with Vitest
+- `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Run tests with Vitest UI interface
-- `npm run test:run` - Run tests once (CI mode)
 - `npm run test:coverage` - Run tests with coverage report
 
 #### E2E Testing
@@ -299,7 +298,7 @@ npm install
 
 ```bash
 # Clear test cache
-npm run test:run -- --reporter=verbose
+npm test -- --reporter=verbose
 ```
 
 **Issue**: Build errors
